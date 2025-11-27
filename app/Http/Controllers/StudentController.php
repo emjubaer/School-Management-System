@@ -48,7 +48,7 @@ class StudentController extends Controller
             $data['photo'] = $fileName;
         } */
 
-       $data['photo'] = $this->handlePhotoUpload($request, $student);
+       $data['photo'] = $this->handlePhotoUpload($request, null);
 
         Student::create($data);
         return redirect()->route('students.index')->with('success', 'Student Create Successfully!');
@@ -117,7 +117,7 @@ class StudentController extends Controller
     private function handlePhotoUpload(Request $request, $student = null){
         if ($request->hasFile('photo')){
             if ($student && $student->photo){
-                Storage::delete('public/students'.$student->photo);
+                Storage::delete('public/students/'.$student->photo);
             }
 
             $file = $request->file('photo');
