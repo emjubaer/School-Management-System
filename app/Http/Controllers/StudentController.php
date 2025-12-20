@@ -110,7 +110,8 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         if ($student->photo){
-            Storage::delete('public/students/'.$student->photo);
+           // Storage::delete('public/students/'.$student->photo);
+           Storage::disk('public')->delete('students/' . $student->photo);
         }
 
         $student->delete();
@@ -120,12 +121,15 @@ class StudentController extends Controller
     private function handlePhotoUpload(Request $request, $student = null){
         if ($request->hasFile('photo')){
             if ($student && $student->photo){
-                Storage::delete('public/students/'.$student->photo);
+                //Storage::delete('public/students/'.$student->photo);
+                Storage::disk('public')->delete('students/' . $student->photo);
             }
 
             $file = $request->file('photo');
             $fileName = time()."_".$file->getClientOriginalName();
-            $file->storeAs('public/students', $fileName);
+          //  $file->storeAs('public/students', $fileName);
+            Storage::disk('public')->putFileAs('students', $file, $fileName);
+
             return $fileName;
         }
 
