@@ -18,6 +18,8 @@ class StudentFactory extends Factory
             'name' => $this->faker->name(),
             'dob' => $this->faker->date(),
             'phone' => $this->faker->phoneNumber(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'class' => $this->faker->randomElement(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']),
             'address' => $this->faker->address(),
             'photo' => null,
         ];

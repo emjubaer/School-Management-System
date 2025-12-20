@@ -12,6 +12,8 @@ class Student extends Model
         'reg_no',
         'name',
         'phone',
+        'email',
+        'class',
         'dob',
         'address',
         'photo'

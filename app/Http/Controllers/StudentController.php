@@ -14,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::latest()->paginate(10);
+        $students = Student::latest()->paginate(8);
         return view('students.index', compact('students'));
     }
 
@@ -32,10 +32,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'reg_no' => 'required|unique:students,reg_no',
-            'name' => 'required',
+            'reg_no' => 'required|unique:students,reg_no,',
+            'name' => 'required|string|max:255',
             'dob' => 'date|nullable',
             'phone' => 'string|nullable',
+            'email' => 'string|email|nullable',
+            'class' => 'integer|required',
             'address' => 'string|nullable',
             'photo' => 'image|nullable|mimes:jpeg,jpg,png,gif|max:2048',
 
@@ -51,7 +53,7 @@ class StudentController extends Controller
        $data['photo'] = $this->handlePhotoUpload($request, null);
 
         Student::create($data);
-        return redirect()->route('students.index')->with('success', 'Student Create Successfully!');
+        return redirect()->route('students.index')->with('success', 'Student Created Successfully!');
     }
 
     /**
@@ -75,16 +77,17 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        $data = $request->validate([
-            'reg_no' => 'required|unique:students,reg_no' . $student->id,
-            'name' => 'required',
+         $data = $request->validate([
+            'reg_no' => 'required|unique:students,reg_no,',
+            'name' => 'required|string|max:255',
             'dob' => 'date|nullable',
             'phone' => 'string|nullable',
+            'email' => 'string|email|nullable',
+            'class' => 'integer|required',
             'address' => 'string|nullable',
             'photo' => 'image|nullable|mimes:jpeg,jpg,png,gif|max:2048',
 
         ]);
-
        /* if ($request->hasFile('photo')){
             if ($student->photo){
                 Storage::delete('public/students'. $student->photo);

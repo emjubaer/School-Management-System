@@ -14,6 +14,18 @@
             </button>
         </div>
 
+
+        {{-- Validation Errors --}}
+        @if ($errors->any())
+            <div class="mb-4 bg-red-100 border border-red-300 text-red-900 px-4 py-3 rounded-lg shadow-sm">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         {{-- Flash Success --}}
         @if (session('success'))
             <div class="mb-4 bg-green-100 border border-green-300 text-green-900 px-4 py-3 rounded-lg shadow-sm">
@@ -132,6 +144,10 @@
                         <label class="font-semibold">Student Name</label>
                         <input type="text" name="name" class="w-full p-2 border rounded" required>
                     </div>
+                    <div>
+                        <label class="font-semibold">Reg. No.</label>
+                        <input type="text" name="reg_no" class="w-full p-2 border rounded" required>
+                    </div>
 
                     <div>
                         <label class="font-semibold">Email</label>
@@ -140,12 +156,12 @@
 
                     <div>
                         <label class="font-semibold">Class</label>
-                        <input type="text" name="reg_class" class="w-full p-2 border rounded" required>
+                        <input type="number" name="class" class="w-full p-2 border rounded" required>
                     </div>
 
                     <div>
-                        <label class="font-semibold">Age</label>
-                        <input type="number" name="age" class="w-full p-2 border rounded" required>
+                        <label class="font-semibold">DOB</label>
+                        <input type="date" name="age" class="w-full p-2 border rounded" required>
                     </div>
                 </div>
 
