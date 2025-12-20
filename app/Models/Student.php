@@ -18,4 +18,8 @@ class Student extends Model
         'address',
         'photo'
     ];
+
+    public function subjects(){
+        return $this->belongsToMany(Subject::class);
+    }
 }
