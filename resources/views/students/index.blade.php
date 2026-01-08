@@ -156,7 +156,7 @@
 
                     <div>
                         <label class="font-semibold">Class</label>
-                        <input type="number" name="class" class="w-full p-2 border rounded" required>
+                        <input type="text" name="class_id" class="w-full p-2 border rounded" >
                     </div>
 
                     <div>

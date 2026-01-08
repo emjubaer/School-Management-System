@@ -13,7 +13,7 @@ class Student extends Model
         'name',
         'phone',
         'email',
-        'class',
+        'class_id',
         'dob',
         'address',
         'photo'
@@ -21,5 +21,9 @@ class Student extends Model
 
     public function subjects(){
         return $this->belongsToMany(Subject::class);
+    }
+
+    public function classRoom(){
+        return $this->belongsTo(ClassRoom::class, 'class_id');
     }
 }

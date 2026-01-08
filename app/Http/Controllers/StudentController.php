@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,6 +15,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+        $classes = ClassRoom::all();
         $students = Student::latest()->paginate(8);
         return view('students.index', compact('students'));
     }
@@ -37,7 +39,7 @@ class StudentController extends Controller
             'dob' => 'date|nullable',
             'phone' => 'string|nullable',
             'email' => 'string|email|nullable',
-            'class' => 'integer|required',
+            'class_id' => 'string|nullable',
             'address' => 'string|nullable',
             'photo' => 'image|nullable|mimes:jpeg,jpg,png,gif|max:2048',
 
