@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@email.com',
             'password' =>Hash::make('password'),
         ]);
-
+        
+        //call the ClassRoomSeeder
         $this->call(ClassRoomSeeder::class);
 
         //call the StudentSeeder
