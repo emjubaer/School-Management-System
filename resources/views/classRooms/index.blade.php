@@ -7,7 +7,7 @@
         PAGE HEADER
     ===================== --}}
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">🏫 Class Rooms</h1>
+        <h1 class="text-2xl font-bold text-white">🏫 Classes List</h1>
 
         <button id="openClassModal"
             class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">

@@ -18,19 +18,25 @@ class ClassRoomController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255|unique:class_rooms,name',
+            'name' => 'required|string|max:255',
             'description' => 'string|nullable',
             'status' => 'in:active,inactive',
         ]);
 
         ClassRoom::create($data);
-        return redirect()->route('classRooms.index')->with('success', 'Class Room Created Successfully!');
+        return redirect()->route('classrooms.index')->with('success', 'Class Room Created Successfully!');
     }
 
     public function destroy(ClassRoom $classRoom)
     {
+      if ($classRoom->students()->exists()) {
+        return redirect()->back()
+            ->with('error', 'Cannot delete class. Students are assigned!');
+
+        }
+        //$classRoom->students()->update(['class_id' => null]);
         $classRoom->delete();
-        return redirect()->route('classRooms.index')->with('success', 'Class Room Deleted Successfully!');
+        return redirect()->route('classrooms.index')->with('success', 'Class Deleted Successfully!');
     }
 
 
