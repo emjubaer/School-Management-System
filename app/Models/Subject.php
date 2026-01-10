@@ -21,5 +21,9 @@ class Subject extends Model
         return $this->belongsToMany(Student::class);
     }
 
+    public function classRooms(){
+        return $this->belongsTo(ClassRoom::class);
+    }
+
 
 }
