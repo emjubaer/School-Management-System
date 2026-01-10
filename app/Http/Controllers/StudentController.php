@@ -15,9 +15,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $classes = ClassRoom::all();
-        $students = Student::latest()->paginate(8);
-        return view('students.index', compact('students'));
+        $classRooms = ClassRoom::all();
+        $students = Student::with('classRoom')->latest()->paginate(8);
+        return view('students.index', compact('students', 'classRooms'));
     }
 
     /**

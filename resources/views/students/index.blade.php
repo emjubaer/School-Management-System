@@ -66,7 +66,7 @@
                         <tr class="hover:bg-gray-50 transition">
                             <td class="px-6 py-4">{{ $student->reg_no }}</td>
                             <td class="px-6 py-4 font-medium">{{ $student->name }}</td>
-                            <td class="px-6 py-4">{{ $student->reg_class ?? '-' }}</td>
+                            <td class="px-6 py-4">{{ $student->classRoom->name ?? '-' }}</td>
 
                             <td class="px-6 py-4">
                                 @if ($student->photo)
@@ -156,7 +156,12 @@
 
                     <div>
                         <label class="font-semibold">Class</label>
-                        <input type="text" name="class_id" class="w-full p-2 border rounded" >
+                        <select name="class_id" id="class_id" class="w-full p-2 border rounded">
+                            @foreach ($classRooms as $classRoom)
+                                <option value="">Select Class</option>
+                                <option value="{{ $classRoom->id }}">{{ $classRoom->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div>
