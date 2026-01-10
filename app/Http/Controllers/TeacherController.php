@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use APP\Models\Teacher;
+use App\Models\Teacher;
 
 class TeacherController extends Controller
 {
@@ -29,7 +29,19 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $data = $request->validate([
+            'emp_code'=> 'string|required|unique:teachers,emp_code',
+            'name'=> 'string|required|max:50',
+            'phone'=> 'string|nullable',
+            'designation'=> 'string|nullable',
+            'address'=> 'string|nullable',
+            'gender'=> 'in:male,female,others',
+            'department'=> 'string|nullable',
+            'status'=> 'in:active,inactive,suspended',
+        ]);
+
+        Teacher::create($data);
+        return redirect()->route('teachers.index')->with('success', 'Teacher Created Successfully!');
     }
 
     /**
@@ -59,8 +71,9 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Teacher $teacher)
     {
-        //
+        $teacher->delete();
+        return redirect()->route('teachers.index')->with('success', 'Teacher Deleted Successfully!');
     }
 }

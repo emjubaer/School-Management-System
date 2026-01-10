@@ -157,8 +157,9 @@
                     <div>
                         <label class="font-semibold">Class</label>
                         <select name="class_id" id="class_id" class="w-full p-2 border rounded">
+                            <option value="">Select Class</option>
+                            
                             @foreach ($classRooms as $classRoom)
-                                <option value="">Select Class</option>
                                 <option value="{{ $classRoom->id }}">{{ $classRoom->name }}</option>
                             @endforeach
                         </select>
