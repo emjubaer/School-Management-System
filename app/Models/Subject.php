@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     protected $fillable = [
+        'class_room_id',
         'name',
         'sub_code',
         'fullmark',
