@@ -143,8 +143,11 @@
                                                 <th class="border border-gray-300 dark:border-gray-600 px-3 py-2">
                                                     Full Mark
                                                 </th>
-                                                <th class="border border-gray-300 dark:border-gray-600 px-3 py-2">
+                                                <th class="border border-gray-300 dark:border-gray-600 px-2 py-2">
                                                     Pass Mark
+                                                </th>
+                                                <th class="border border-gray-300 dark:border-gray-600 px-2 py-2">
+                                                    Action
                                                 </th>
                                             </tr>
                                         </thead>
@@ -163,7 +166,11 @@
                                                     </td>
                                                     <td class="border border-gray-300 dark:border-gray-600 px-3 py-2">
                                                         {{ $subject->pass_mark }}
+                                                    </td class="border border">
+                                                    <td>
+
                                                     </td>
+
                                                 </tr>
                                             @endforeach
                                         </tbody>

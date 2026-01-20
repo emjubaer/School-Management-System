@@ -6,7 +6,7 @@ use App\Models\Student;
 use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -25,7 +25,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view ('students.create');
+        return view('students.create');
     }
 
     /**
@@ -41,7 +41,14 @@ class StudentController extends Controller
             'email' => 'string|email|nullable',
             'class_id' => 'string|nullable',
             'address' => 'string|nullable',
-            'photo' => 'image|nullable|mimes:jpeg,jpg,png,gif|max:2048',
+            // 'photo' => 'image|nullable|mimes:jpeg,jpg,png,gif|max:2048',
+            'photo' => [
+                'image',
+                'nullable',
+                'mimes:jpeg,jpg,png,gif',
+                'max:2048',
+            ],
+
 
         ]);
 
@@ -52,7 +59,7 @@ class StudentController extends Controller
             $data['photo'] = $fileName;
         } */
 
-       $data['photo'] = $this->handlePhotoUpload($request, null);
+        $data['photo'] = $this->handlePhotoUpload($request, null);
 
         Student::create($data);
         return redirect()->route('students.index')->with('success', 'Student Created Successfully!');
@@ -63,7 +70,8 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        return view ('students.show', compact('student'));
+        // return view ('students.show', compact('student'));
+        return $student->load('classRoom', 'subjects');
     }
 
     /**
@@ -71,7 +79,9 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-         return view ('students.edit', compact('student'));
+        // $classRooms = ClassRoom::all();
+        // return view('students.edit', compact('student', 'classRooms'));
+        return $student;
     }
 
     /**
@@ -79,7 +89,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-         $data = $request->validate([
+        $data = $request->validate([
             'reg_no' => 'required|unique:students,reg_no,',
             'name' => 'required|string|max:255',
             'dob' => 'date|nullable',
@@ -90,7 +100,7 @@ class StudentController extends Controller
             'photo' => 'image|nullable|mimes:jpeg,jpg,png,gif|max:2048',
 
         ]);
-       /* if ($request->hasFile('photo')){
+        /* if ($request->hasFile('photo')){
             if ($student->photo){
                 Storage::delete('public/students'. $student->photo);
             }
@@ -100,7 +110,7 @@ class StudentController extends Controller
             $data['photo'] = $fileName;
         } */
 
-            $data['photo'] = $this->handlePhotoUpload($request, $student);
+        $data['photo'] = $this->handlePhotoUpload($request, $student);
 
         $student->update($data);
         return redirect()->route('students.index')->with('success', "Student Information Successfully Updated");
@@ -111,25 +121,26 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        if ($student->photo){
-           // Storage::delete('public/students/'.$student->photo);
-           Storage::disk('public')->delete('students/' . $student->photo);
+        if ($student->photo) {
+            // Storage::delete('public/students/'.$student->photo);
+            Storage::disk('public')->delete('students/' . $student->photo);
         }
 
         $student->delete();
         return redirect()->route('students.index')->with('success', 'Student Deleted Successfully!');
     }
 
-    private function handlePhotoUpload(Request $request, $student = null){
-        if ($request->hasFile('photo')){
-            if ($student && $student->photo){
+    private function handlePhotoUpload(Request $request, $student = null)
+    {
+        if ($request->hasFile('photo')) {
+            if ($student && $student->photo) {
                 //Storage::delete('public/students/'.$student->photo);
                 Storage::disk('public')->delete('students/' . $student->photo);
             }
 
             $file = $request->file('photo');
-            $fileName = time()."_".$file->getClientOriginalName();
-          //  $file->storeAs('public/students', $fileName);
+            $fileName = time() . "_" . $file->getClientOriginalName();
+            //  $file->storeAs('public/students', $fileName);
             Storage::disk('public')->putFileAs('students', $file, $fileName);
 
             return $fileName;
